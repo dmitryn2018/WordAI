@@ -1,0 +1,19 @@
+{
+  "LLM_API_BASE": "https://api.openai.com/v1",
+  "LLM_MODEL": "gpt-4o-mini",
+  "MAX_CONTEXT_CHARS": 8000,
+  "modes": {
+    "chat": true,
+    "rewrite": true,
+    "compress": true,
+    "expand": true,
+    "summarize": true,
+    "generate_section": true
+  },
+  "defaults": {
+    "temperature": 0.3,
+    "maxTokens": 2000,
+    "legalStyleEnabled": true
+  }
+}
+
