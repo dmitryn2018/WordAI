@@ -1,40 +1,40 @@
 # Word AI Assistant
 
-Task Pane Add-in для Microsoft Word с ChatGPT-интерфейсом для работы с документами.
+Task Pane Add-in for Microsoft Word with a ChatGPT interface for document work.
 
 ![Word AI Assistant](docs/screenshot.png)
 
-## Возможности
+## Features
 
-- **Chat по документу** — задавайте вопросы по содержимому документа
-- **Переформулирование** — переписывание выделенного текста с сохранением смысла
-- **Сжатие** — сокращение текста до 30-50% от оригинала
-- **Расширение** — дополнение текста уточнениями и деталями
-- **Суммаризация** — структурированное резюме документа
-- **Генерация разделов** — создание новых разделов по описанию
+- **Document Chat** — ask questions about document content
+- **Rephrase** — rewrite selected text while preserving meaning
+- **Compress** — reduce text to 30-50% of original
+- **Expand** — add clarifications and details to text
+- **Summarize** — create structured document summary
+- **Generate Sections** — create new sections from description
 
-## Требования
+## Requirements
 
 - Node.js 18+
-- Microsoft Word for Mac (Microsoft 365) или Word Online
-- OpenAI API ключ
+- Microsoft Word for Mac (Microsoft 365) or Word Online
+- OpenAI API key
 
-## Установка
+## Installation
 
 ```bash
-# Клонируйте репозиторий
+# Clone the repository
 cd WordAI
 
-# Установите зависимости
+# Install dependencies
 npm install
 
-# Создайте файл .env в папке server
-cp server/.env.example server/.env
+# Create .env file in server folder
+cp server/env.example server/.env
 
-# Отредактируйте .env и добавьте ваш OpenAI API ключ
+# Edit .env and add your OpenAI API key
 ```
 
-### Конфигурация (server/.env)
+### Configuration (server/.env)
 
 ```env
 OPENAI_API_KEY=sk-your-api-key-here
@@ -44,123 +44,122 @@ PORT=3001
 MAX_CONTEXT_CHARS=8000
 ```
 
-## Запуск
+## Running
 
 ```bash
-# Запуск клиента и сервера одновременно
+# Start client and server simultaneously
 npm run dev
 
-# Или раздельно:
-npm run dev:client  # Фронтенд на https://localhost:3000
-npm run dev:server  # Бэкенд на http://localhost:3001
+# Or separately:
+npm run dev:client  # Frontend at https://localhost:3000
+npm run dev:server  # Backend at http://localhost:3001
 ```
 
-При первом запуске клиента `vite-plugin-mkcert` автоматически создаст и установит SSL-сертификат для localhost.
+On first client launch, `vite-plugin-mkcert` will automatically create and install an SSL certificate for localhost.
 
-## Sideload в Word for Mac
+## Sideload in Word for Mac
 
-### Способ 1: Через папку ~/Library/Containers (рекомендуется)
+### Method 1: Via ~/Library/Containers folder (recommended)
 
-1. Закройте Word
-2. Скопируйте манифест:
+1. Close Word
+2. Copy the manifest:
    ```bash
    mkdir -p ~/Library/Containers/com.microsoft.Word/Data/Documents/wef
    cp manifest/word-addin-manifest.xml ~/Library/Containers/com.microsoft.Word/Data/Documents/wef/
    ```
-3. Откройте Word
-4. Перейдите: **Вставка → Надстройки → Мои надстройки**
-5. Найдите "AI Assistant" и активируйте
+3. Open Word
+4. Go to: **Insert → Add-ins → My Add-ins**
+5. Find "AI Assistant" and activate it
 
-### Способ 2: Через меню разработчика
+### Method 2: Via developer menu
 
-1. Откройте Word
-2. Перейдите: **Вставка → Надстройки → Мои надстройки**
-3. Выберите вкладку **Общая папка** (или **Shared Folder**)
-4. Нажмите **Обзор** и выберите файл `manifest/word-addin-manifest.xml`
+1. Open Word
+2. Go to: **Insert → Add-ins → My Add-ins**
+3. Select the **Shared Folder** tab
+4. Click **Browse** and select `manifest/word-addin-manifest.xml`
 
-### Способ 3: Через Office Online
+### Method 3: Via Office Online
 
-1. Откройте Word Online (office.com)
-2. Создайте или откройте документ
-3. **Вставка → Надстройки → Управление моими надстройками**
-4. **Отправить надстройку** → выберите `word-addin-manifest.xml`
+1. Open Word Online (office.com)
+2. Create or open a document
+3. **Insert → Add-ins → Manage My Add-ins**
+4. **Upload My Add-in** → select `word-addin-manifest.xml`
 
-## Использование
+## Usage
 
-1. Откройте документ в Word
-2. Нажмите кнопку **AI Assistant** на панели "Вставка"
-3. Выберите режим работы в выпадающем списке
-4. Введите запрос и нажмите **Отправить**
+1. Open a document in Word
+2. Click the **AI Assistant** button on the Insert ribbon
+3. Select the mode from the dropdown
+4. Enter your request and click **Send**
 
-### Режимы работы
+### Modes
 
-| Режим | Требует выделение | Описание |
-|-------|-------------------|----------|
-| Chat по документу | Нет | Вопросы по содержимому документа |
-| Переформулировать | Да | Переписать выделенный текст |
-| Сжать | Да | Сократить текст на 50-70% |
-| Расширить | Да | Добавить детали и уточнения |
-| Суммаризировать | Нет | Создать структурированное резюме |
-| Сгенерировать раздел | Нет | Создать новый раздел по описанию |
+| Mode | Requires Selection | Description |
+|------|-------------------|-------------|
+| Document Chat | No | Ask questions about document content |
+| Rephrase | Yes | Rewrite selected text |
+| Compress | Yes | Reduce text by 50-70% |
+| Expand | Yes | Add details and clarifications |
+| Summarize | No | Create structured summary |
+| Generate Section | No | Create new section from description |
 
-### Опции
+### Options
 
-- **Использовать выделенный текст** — брать контекст из выделения (иначе из всего документа)
-- **Заменить выделенный текст** — автоматически заменить выделение на результат
+- **Use selected text** — take context from selection (otherwise from entire document)
+- **Replace selected text** — automatically replace selection with result
 
-## Настройки
+## Settings
 
-Нажмите ⚙️ в панели для доступа к настройкам:
+Click ⚙️ in the panel to access settings:
 
-- **Модель LLM** — модель OpenAI (gpt-4o-mini, gpt-4o, etc.)
-- **Максимум символов контекста** — лимит текста для отправки в LLM
-- **Юридический стиль** — использовать юридическую терминологию в промптах
+- **LLM Model** — OpenAI model (gpt-4o-mini, gpt-4o, etc.)
+- **Max context characters** — text limit for sending to LLM
+- **Legal style** — use legal terminology in prompts
 
-## Структура проекта
+## Project Structure
 
 ```
 WordAI/
 ├── manifest/
-│   └── word-addin-manifest.xml   # Манифест Office Add-in
+│   └── word-addin-manifest.xml   # Office Add-in manifest
 ├── client/                        # React + Vite + TypeScript
 │   ├── src/
-│   │   ├── components/           # UI компоненты
-│   │   ├── hooks/                # React хуки
-│   │   ├── office/               # Office.js обёртки
-│   │   ├── api/                  # HTTP клиент
-│   │   └── utils/                # Промпты и утилиты
+│   │   ├── components/           # UI components
+│   │   ├── hooks/                # React hooks
+│   │   ├── office/               # Office.js wrappers
+│   │   ├── api/                  # HTTP client
+│   │   └── utils/                # Prompts and utilities
 │   └── vite.config.ts
 ├── server/                        # Express + TypeScript
 │   ├── src/
-│   │   ├── index.ts              # HTTP сервер
-│   │   └── llm.ts                # OpenAI интеграция
-│   └── .env                      # Конфигурация (не в git)
+│   │   ├── index.ts              # HTTP server
+│   │   └── llm.ts                # OpenAI integration
+│   └── .env                      # Configuration (not in git)
 ├── config/
-│   └── config.example.json       # Пример конфигурации
+│   └── config.example.json       # Example configuration
 └── package.json
 ```
 
-## Решение проблем
+## Troubleshooting
 
-### Сертификат не доверен
+### Certificate not trusted
 
-При первом запуске браузер может показать предупреждение о сертификате. Добавьте исключение или:
+On first launch, the browser may show a certificate warning. Add an exception or:
 
 ```bash
-# macOS - доверить сертификат
+# macOS - trust certificate
 sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain ~/.vite-plugin-mkcert/cert.pem
 ```
 
-### Add-in не загружается
+### Add-in not loading
 
-1. Убедитесь что dev-сервер запущен (`npm run dev`)
-2. Откройте https://localhost:3000 в браузере и примите сертификат
-3. Перезапустите Word
-4. Проверьте консоль Word на ошибки (Cmd+Option+I в Word Online)
+1. Make sure dev server is running (`npm run dev`)
+2. Open https://localhost:3000 in browser and accept the certificate
+3. Restart Word
+4. Check Word console for errors (Cmd+Option+I in Word Online)
 
-### Ошибка API
+### API Error
 
-1. Проверьте `OPENAI_API_KEY` в `server/.env`
-2. Проверьте логи сервера в терминале
-3. Убедитесь что модель доступна для вашего API ключа
-
+1. Check `OPENAI_API_KEY` in `server/.env`
+2. Check server logs in terminal
+3. Make sure the model is available for your API key
